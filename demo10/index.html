@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="../lib/react.js"></script>
+    <script src="../lib/react-dom.js"></script>
+    <script src="../lib/browser.min.js"></script>
+    <title>react-demo10</title>
+</head>
+<body>
+    <div id="example"></div>
+    <script type="text/babel">
+    var Hello = React.createClass({
+        getInitialState: function(){
+            return {
+                opacity: 1.0,
+                direction: true
+            }
+        },
+        componentDidMount: function(){
+            this.timer = setInterval(function(){
+                var opacity = this.state.opacity;
+                if(this.state.direction){
+                    opacity -= 0.02;
+                }else{
+                    opacity += 0.02;
+                }
+
+                if(opacity < 0){
+                    this.state.direction = false;
+                }else if(opacity >= 1.0){
+                    this.state.direction = true;
+                }
+
+                this.setState({
+                    opacity: opacity
+                });
+            }.bind(this),100);
+        },
+        render: function() {
+            return (
+                <div style={{opacity: this.state.opacity}}>
+                    Hello {this.props.name}
+                </div>
+            );
+        }
+    });
+
+    ReactDOM.render(
+        <Hello name="world"/>,
+        document.getElementById('example')
+    );
+    </script>
+</body>
+</html>
