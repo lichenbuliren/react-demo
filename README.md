@@ -21,6 +21,7 @@
     </html>
 ```
 
+<!-- more -->
 
 ### 2、JSX 语法
 
@@ -68,7 +69,7 @@
             return (
                 <ol>
                 {
-                    React.Children.map(this.props.children,function(child,index){
+                    React.Children.map(this.props.children, function(child,index){
                         return <li key={index}>{child}</li>;
                     })
                 }
@@ -89,8 +90,7 @@
 
 ### 5、PropTypes
 
-组件的属性可以接受任意值，字符串、对象、函数等等都可以。有时，我们需要一种机制，验证别人使用组件时，提供的参数是否符合要求。
-组件类的PropTypes属性，就是用来验证组件实例的属性是否符合要求
+组件的属性可以接受任意值，字符串、对象、函数等等都可以。有时，我们需要一种机制，验证别人使用组件时，提供的参数是否符合要求。组件类的 PropTypes 属性，就是用来验证组件实例的属性是否符合要求
 
 ``` javascript
     var MyTitle = React.createClass({
@@ -100,9 +100,9 @@
                 title: 'Hello world'
             };
         },
-        // propTypes:{
-        //     title: React.PropTypes.string.isRequired
-        // },
+        propTypes:{
+            title: React.PropTypes.string.isRequired
+        },
         render: function(){
             return <h1>{this.props.title}</h1>
         }
@@ -116,10 +116,10 @@
     );
 ```
 
-### 6、获取真实的DOM节点
 
-组件并不是真实的 DOM 节点，而是存在于内存之中的一种数据结构，叫做虚拟 DOM （virtual DOM）。只有当它插入文档以后，才会变成真实的 DOM 。根据 React 的设计，所有的 DOM 变动，都先在虚拟 DOM 上发生，然后再将实际发生变动的部分，反映在真实 DOM上，这种算法叫做 DOM diff ，它可以极大提高网页的性能表现。
-但是，有时需要从组件获取真实 DOM 的节点，这时就要用到 ref 属性
+### 6、获取真实的 DOM 节点
+
+组件并不是真实的 DOM 节点，而是存在于内存之中的一种数据结构，叫做虚拟 DOM （virtual DOM）。只有当它插入文档以后，才会变成真实的 DOM 。根据 React 的设计，所有的 DOM 变动，都先在虚拟 DOM 上发生，然后再将实际发生变动的部分，反映在真实 DOM上，这种算法叫做 DOM diff ，它可以极大提高网页的性能表现。但是，有时需要从组件获取真实 DOM 的节点，这时就要用到 ref 属性
 
 ``` javascript
     var MyComponent = React.createClass({
@@ -143,7 +143,6 @@
 ```
 
 上面代码中，组件 MyComponent 的子节点有一个文本输入框，用于获取用户的输入。这时就必须获取真实的 DOM 节点，虚拟 DOM 是拿不到用户输入的。为了做到这一点，文本输入框必须有一个 ref 属性，然后 this.refs.[refName] 就会返回这个真实的 DOM 节点。
-
 需要注意的是，由于 this.refs.[refName] 属性获取的是真实 DOM ，所以必须等到虚拟 DOM 插入文档以后，才能使用这个属性，否则会报错。上面代码中，通过为组件指定 Click 事件的回调函数，确保了只有等到真实 DOM 发生 Click 事件之后，才会读取 this.refs.[refName] 属性。
 
 
@@ -211,11 +210,13 @@
 ### 9、组件的生命周期
 
 组件的生命周期分成三个状态：
+
 - Mounting: 已插入真实 DOM
 - Updating：正在被重新渲染
 - Unmounting：已移除真实 DOM
 
 React 为每个状态都提供了两种处理函数，will 函数在进入状态之前调用，did 函数在进入状态之后调用，三种状态共计五种处理函数。
+
 - componentWillMount()
 - componentDidMount()
 - componentWillUpdate(object nextProps, object nextState)
@@ -270,7 +271,7 @@ React 为每个状态都提供了两种处理函数，will 函数在进入状态
     );
 ```
 
-上面代码在hello组件加载以后，通过 componentDidMount 方法设置一个定时器，每隔100毫秒，就重新设置组件的透明度，从而引发重新渲染。同时设置了一个方向变量来决定 opacity 是增加还是减少。
+上面代码在 Hello 组件加载以后，通过 componentDidMount 方法设置一个定时器，每隔 100 毫秒，就重新设置组件的透明度，从而引发重新渲染。同时设置了一个方向变量来决定 opacity 是增加还是减少。
 
 另外，组件的 `style` 属性的设置方式也值得注意，不能写成
 ``` css
